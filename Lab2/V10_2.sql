@@ -18,7 +18,7 @@ CREATE TABLE [dbo].[Employee](
 
 -- Задание б)
 
-ALTER TABLE [dbo].[Employee] ADD [ID] [BIGINT] IDENTITY(0,2) PRIMARY KEY; 
+ALTER TABLE [dbo].[Employee] ADD [EmployeeID] [BIGINT] IDENTITY(0,2) PRIMARY KEY; 
 
 
 -- Задание с)
