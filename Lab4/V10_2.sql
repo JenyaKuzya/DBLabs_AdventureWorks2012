@@ -1,13 +1,13 @@
---Вариант 10
+--Р’Р°СЂРёР°РЅС‚ 10
 
 USE AdventureWorks2012;
 GO
 
---a) Создайте представление VIEW, отображающее данные из 
---таблиц Sales.SalesReason и Sales.SalesOrderHeaderSalesReason, 
---а также CustomerID из таблицы Sales.SalesOrderHeader. 
---Создайте уникальный кластерный индекс в представлении по 
---полям SalesReasonID, SalesOrderID.
+--a) РЎРѕР·РґР°Р№С‚Рµ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ VIEW, РѕС‚РѕР±СЂР°Р¶Р°СЋС‰РµРµ РґР°РЅРЅС‹Рµ РёР· 
+--С‚Р°Р±Р»РёС† Sales.SalesReason Рё Sales.SalesOrderHeaderSalesReason, 
+--Р° С‚Р°РєР¶Рµ CustomerID РёР· С‚Р°Р±Р»РёС†С‹ Sales.SalesOrderHeader. 
+--РЎРѕР·РґР°Р№С‚Рµ СѓРЅРёРєР°Р»СЊРЅС‹Р№ РєР»Р°СЃС‚РµСЂРЅС‹Р№ РёРЅРґРµРєСЃ РІ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРё РїРѕ 
+--РїРѕР»СЏРј SalesReasonID, SalesOrderID.
 
 CREATE VIEW Sales.vSalesOrderReason
 WITH SCHEMABINDING AS
@@ -28,14 +28,14 @@ CREATE UNIQUE CLUSTERED INDEX IX_vSalesOrderReason
 	ON Sales.vSalesOrderReason (SalesOrderID, SalesReasonID);
 GO
 
---b) Создайте один INSTEAD OF триггер для представления на 
---три операции INSERT, UPDATE, DELETE. 
---Триггер должен выполнять соответствующие операции 
---в таблицах Sales.SalesReason и Sales.SalesOrderHeaderSalesReason 
---для указанного CustomerID. 
---Обновление не должно происходить в таблице Sales.SalesOrderHeaderSalesReason. 
---Удаление из таблицы Sales.SalesReason производите только в том случае, 
---если удаляемые строки больше не ссылаются на 
+--b) РЎРѕР·РґР°Р№С‚Рµ РѕРґРёРЅ INSTEAD OF С‚СЂРёРіРіРµСЂ РґР»СЏ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёСЏ РЅР° 
+--С‚СЂРё РѕРїРµСЂР°С†РёРё INSERT, UPDATE, DELETE. 
+--РўСЂРёРіРіРµСЂ РґРѕР»Р¶РµРЅ РІС‹РїРѕР»РЅСЏС‚СЊ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёРµ РѕРїРµСЂР°С†РёРё 
+--РІ С‚Р°Р±Р»РёС†Р°С… Sales.SalesReason Рё Sales.SalesOrderHeaderSalesReason 
+--РґР»СЏ СѓРєР°Р·Р°РЅРЅРѕРіРѕ CustomerID. 
+--РћР±РЅРѕРІР»РµРЅРёРµ РЅРµ РґРѕР»Р¶РЅРѕ РїСЂРѕРёСЃС…РѕРґРёС‚СЊ РІ С‚Р°Р±Р»РёС†Рµ Sales.SalesOrderHeaderSalesReason. 
+--РЈРґР°Р»РµРЅРёРµ РёР· С‚Р°Р±Р»РёС†С‹ Sales.SalesReason РїСЂРѕРёР·РІРѕРґРёС‚Рµ С‚РѕР»СЊРєРѕ РІ С‚РѕРј СЃР»СѓС‡Р°Рµ, 
+--РµСЃР»Рё СѓРґР°Р»СЏРµРјС‹Рµ СЃС‚СЂРѕРєРё Р±РѕР»СЊС€Рµ РЅРµ СЃСЃС‹Р»Р°СЋС‚СЃСЏ РЅР° 
 --Sales.SalesOrderHeaderSalesReason.
 CREATE TRIGGER TRG_vSalesOrderReason
 ON Sales.vSalesOrderReason
@@ -76,11 +76,11 @@ BEGIN
 END;
 GO
 
---c) Вставьте новую строку в представление, указав новые данные 
---SalesReason для существующего CustomerID (например для 11000). 
---Триггер должен добавить новые строки в таблицы Sales.SalesReason 
---и Sales.SalesOrderHeaderSalesReason. Обновите вставленные строки 
---через представление. Удалите строки.
+--c) Р’СЃС‚Р°РІСЊС‚Рµ РЅРѕРІСѓСЋ СЃС‚СЂРѕРєСѓ РІ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ, СѓРєР°Р·Р°РІ РЅРѕРІС‹Рµ РґР°РЅРЅС‹Рµ 
+--SalesReason РґР»СЏ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РµРіРѕ CustomerID (РЅР°РїСЂРёРјРµСЂ РґР»СЏ 11000). 
+--РўСЂРёРіРіРµСЂ РґРѕР»Р¶РµРЅ РґРѕР±Р°РІРёС‚СЊ РЅРѕРІС‹Рµ СЃС‚СЂРѕРєРё РІ С‚Р°Р±Р»РёС†С‹ Sales.SalesReason 
+--Рё Sales.SalesOrderHeaderSalesReason. РћР±РЅРѕРІРёС‚Рµ РІСЃС‚Р°РІР»РµРЅРЅС‹Рµ СЃС‚СЂРѕРєРё 
+--С‡РµСЂРµР· РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ. РЈРґР°Р»РёС‚Рµ СЃС‚СЂРѕРєРё.
 SELECT * FROM Sales.SalesOrderHeaderSalesReason
 WHERE SalesOrderID = 57418
 SELECT * FROM Sales.SalesReason 
