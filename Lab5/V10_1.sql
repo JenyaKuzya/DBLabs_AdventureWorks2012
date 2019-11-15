@@ -1,11 +1,11 @@
---Вариант 10
+--Р’Р°СЂРёР°РЅС‚ 10
 
 USE AdventureWorks2012;
 GO
 
---Создайте scalar-valued функцию, которая будет принимать в качестве входного параметра id
--- для типа телефонного номера (Person.PhoneNumberType.PhoneNumberTypeID) и 
---возвращать количество телефонов указанного типа (Person.PersonPhone).
+--РЎРѕР·РґР°Р№С‚Рµ scalar-valued С„СѓРЅРєС†РёСЋ, РєРѕС‚РѕСЂР°СЏ Р±СѓРґРµС‚ РїСЂРёРЅРёРјР°С‚СЊ РІ РєР°С‡РµСЃС‚РІРµ РІС…РѕРґРЅРѕРіРѕ РїР°СЂР°РјРµС‚СЂР° id
+-- РґР»СЏ С‚РёРїР° С‚РµР»РµС„РѕРЅРЅРѕРіРѕ РЅРѕРјРµСЂР° (Person.PhoneNumberType.PhoneNumberTypeID) Рё 
+--РІРѕР·РІСЂР°С‰Р°С‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ С‚РµР»РµС„РѕРЅРѕРІ СѓРєР°Р·Р°РЅРЅРѕРіРѕ С‚РёРїР° (Person.PersonPhone).
 
 CREATE FUNCTION dbo.fPhohesCount (@PhoneNumberTypeID INT)
 RETURNS INT AS
@@ -23,11 +23,11 @@ GO
 SELECT dbo.fPhohesCount(3) AS PhonesCount;
 GO
 
---Создайте inline table-valued функцию, которая будет принимать в качестве входного 
---параметра id для типа телефонного номера (Person.PhoneNumberType.PhoneNumberTypeID), 
---а возвращать список сотрудников из Person.Person 
---(сотрудники обозначены как PersonType = ‘EM’), телефонный номер которых 
---принадлежит к указанному типу.
+--РЎРѕР·РґР°Р№С‚Рµ inline table-valued С„СѓРЅРєС†РёСЋ, РєРѕС‚РѕСЂР°СЏ Р±СѓРґРµС‚ РїСЂРёРЅРёРјР°С‚СЊ РІ РєР°С‡РµСЃС‚РІРµ РІС…РѕРґРЅРѕРіРѕ 
+--РїР°СЂР°РјРµС‚СЂР° id РґР»СЏ С‚РёРїР° С‚РµР»РµС„РѕРЅРЅРѕРіРѕ РЅРѕРјРµСЂР° (Person.PhoneNumberType.PhoneNumberTypeID), 
+--Р° РІРѕР·РІСЂР°С‰Р°С‚СЊ СЃРїРёСЃРѕРє СЃРѕС‚СЂСѓРґРЅРёРєРѕРІ РёР· Person.Person 
+--(СЃРѕС‚СЂСѓРґРЅРёРєРё РѕР±РѕР·РЅР°С‡РµРЅС‹ РєР°Рє PersonType = вЂEMвЂ™), С‚РµР»РµС„РѕРЅРЅС‹Р№ РЅРѕРјРµСЂ РєРѕС‚РѕСЂС‹С… 
+--РїСЂРёРЅР°РґР»РµР¶РёС‚ Рє СѓРєР°Р·Р°РЅРЅРѕРјСѓ С‚РёРїСѓ.
 
 CREATE FUNCTION dbo.fPersonsList (@PhoneNumberTypeID INT)
 RETURNS TABLE AS
@@ -45,8 +45,8 @@ SELECT *
 FROM dbo.fPersonsList(3);
 GO
 
---Вызовите функцию для каждого типа телефонного номера, применив оператор CROSS APPLY. 
---Вызовите функцию для каждого типа телефонного номера, применив оператор OUTER APPLY.
+--Р’С‹Р·РѕРІРёС‚Рµ С„СѓРЅРєС†РёСЋ РґР»СЏ РєР°Р¶РґРѕРіРѕ С‚РёРїР° С‚РµР»РµС„РѕРЅРЅРѕРіРѕ РЅРѕРјРµСЂР°, РїСЂРёРјРµРЅРёРІ РѕРїРµСЂР°С‚РѕСЂ CROSS APPLY. 
+--Р’С‹Р·РѕРІРёС‚Рµ С„СѓРЅРєС†РёСЋ РґР»СЏ РєР°Р¶РґРѕРіРѕ С‚РёРїР° С‚РµР»РµС„РѕРЅРЅРѕРіРѕ РЅРѕРјРµСЂР°, РїСЂРёРјРµРЅРёРІ РѕРїРµСЂР°С‚РѕСЂ OUTER APPLY.
 SELECT PT.PhoneNumberTypeID, F.BusinessEntityId
 FROM Person.PhoneNumberType PT
 CROSS APPLY dbo.fPersonsList(PT.PhoneNumberTypeID) F
@@ -58,8 +58,8 @@ OUTER APPLY dbo.fPersonsList(PT.PhoneNumberTypeID) F
 ORDER BY PT.PhoneNumberTypeID, F.BusinessEntityId;
 
 GO
---Измените созданную inline table-valued функцию, сделав ее multistatement table-valued 
---(предварительно сохранив для проверки код создания inline table-valued функции).
+--РР·РјРµРЅРёС‚Рµ СЃРѕР·РґР°РЅРЅСѓСЋ inline table-valued С„СѓРЅРєС†РёСЋ, СЃРґРµР»Р°РІ РµРµ multistatement table-valued 
+--(РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ СЃРѕС…СЂР°РЅРёРІ РґР»СЏ РїСЂРѕРІРµСЂРєРё РєРѕРґ СЃРѕР·РґР°РЅРёСЏ inline table-valued С„СѓРЅРєС†РёРё).
 
 CREATE FUNCTION dbo.fPersonsListMSTV (@PhoneNumberTypeID INT)
 RETURNS @Result TABLE (
